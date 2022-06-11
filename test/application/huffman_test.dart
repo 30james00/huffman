@@ -7,4 +7,8 @@ void main() {
     expect(result['S'], 1);
     expect(result['n'], 3);
   });
+  test("Test Huffman construction", () {
+    var huffman = Huffman(count("W czasie suszy szosza sucha"));
+    expect(huffman, isNotNull);
+  });
 }
