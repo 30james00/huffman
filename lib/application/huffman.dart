@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 
 class Huffman {
   HuffmanNode? root;
+  Map<String, String> code = <String, String>{};
+  String encoded = '';
 
   Huffman(String phrase) {
     Map<String, int> freq = _count(phrase);
@@ -22,17 +24,29 @@ class Huffman {
 
       queue.add(f);
     }
-
-    if (root != null) printCode(root!, "");
+    if (root != null) _printCode(root!, "");
+    phrase.split('').forEach((c) {
+      encoded += code[c] ?? '';
+    });
   }
 
   Map<String, int> _count(String phrase) {
     Map<String, int> result = <String, int>{};
-    for (int c in phrase.runes) {
-      result.update(String.fromCharCode(c), (value) => value + 1,
+    phrase.split('').forEach((c) {
+      result.update(c, (value) => value + 1,
           ifAbsent: () => 1);
-    }
+    });
     return result;
+  }
+
+  void _printCode(HuffmanNode node, String s) {
+    if (node.left == null && node.right == null) {
+      var c = {node.character: s};
+      code.addAll(c);
+    } else {
+      _printCode(node.left!, '${s}0');
+      _printCode(node.right!, '${s}1');
+    }
   }
 }
 
@@ -48,14 +62,5 @@ class HuffmanNode {
   @override
   String toString() {
     return '$character $frequency';
-  }
-}
-
-void printCode(HuffmanNode node, String s) {
-  if (node.left == null && node.right == null)
-    print('${node.character} : $s');
-  else {
-    printCode(node.left!, '${s}0');
-    printCode(node.right!, '${s}1');
   }
 }
