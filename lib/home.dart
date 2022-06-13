@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huffman/application/huffman.dart';
+import 'package:huffman/presentation/huffman_tree_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -61,7 +62,10 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.button,
               ),
             ),
-            if (huffman != null) Text(huffman!.encoded),
+            if (huffman != null && huffman?.root != null) ...[
+              Text(huffman!.encoded),
+              HuffmanTreeView(root: huffman?.root),
+            ],
           ],
         ),
       ),
