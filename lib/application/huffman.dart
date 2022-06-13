@@ -1,9 +1,17 @@
 import 'package:collection/collection.dart';
 
 class Huffman {
-  HuffmanNode? root;
-  Map<String, String> code = <String, String>{};
-  String encoded = '';
+  HuffmanNode? _root;
+  Map<String, String> _code = <String, String>{};
+  String _encoded = '';
+
+  HuffmanNode? get root {
+    return _root;
+  }
+
+  Map<String, String> get code => _code;
+
+  String get encoded => _encoded;
 
   Huffman(String phrase) {
     Map<String, int> freq = _count(phrase);
@@ -20,21 +28,20 @@ class Huffman {
 
       HuffmanNode f = HuffmanNode('-', x.frequency + y.frequency, x, y);
 
-      root = f;
+      _root = f;
 
       queue.add(f);
     }
-    if (root != null) _printCode(root!, "");
+    if (_root != null) _printCode(_root!, "");
     phrase.split('').forEach((c) {
-      encoded += code[c] ?? '';
+      _encoded += _code[c] ?? '';
     });
   }
 
   Map<String, int> _count(String phrase) {
     Map<String, int> result = <String, int>{};
     phrase.split('').forEach((c) {
-      result.update(c, (value) => value + 1,
-          ifAbsent: () => 1);
+      result.update(c, (value) => value + 1, ifAbsent: () => 1);
     });
     return result;
   }
@@ -42,7 +49,7 @@ class Huffman {
   void _printCode(HuffmanNode node, String s) {
     if (node.left == null && node.right == null) {
       var c = {node.character: s};
-      code.addAll(c);
+      _code.addAll(c);
     } else {
       _printCode(node.left!, '${s}0');
       _printCode(node.right!, '${s}1');
