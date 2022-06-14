@@ -24,49 +24,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Huffman code',
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            Form(
-              key: _formKey,
-              child: TextFormField(
-                controller: formController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter message to encode';
-                  }
-                  return null;
-                },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Text(
+                  'Huffman code',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Processing Data'),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: formController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter message to encode';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter message to encode',
                     ),
-                  );
-                  setState(() {
-                    huffman = Huffman(formController.text);
-                  });
-                }
-              },
-              child: Text(
-                'Encode',
-                style: Theme.of(context).textTheme.button,
+                  ),
+                ),
               ),
-            ),
-            if (huffman != null && huffman?.root != null) ...[
-              Text(huffman!.encoded),
-              HuffmanTreeView(root: huffman?.root),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Processing Data'),
+                        ),
+                      );
+                      setState(() {
+                        huffman = Huffman(formController.text);
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Encode',
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+              ),
+              if (huffman != null && huffman?.root != null) ...[
+                Text(huffman!.encoded),
+                HuffmanTreeView(root: huffman?.root),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
