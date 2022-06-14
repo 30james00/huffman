@@ -1,16 +1,8 @@
-# huffman
+# Huffman
 
-A new Flutter project.
+Multiplatform Flutter app for Huffman encoding.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+About Huffman coding:
+- [Huffman Coding | Programiz](https://www.programiz.com/dsa/huffman-coding)
+- [Huffman Coding | Greedy Algo-3 | GeeksforGeeks](https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/)
+- T.H. Cormen, C.E. Leiserson, R.L. Rivest, C. Stein, Introduction to Algorithms.
