@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                       border: OutlineInputBorder(),
                       hintText: 'Enter message to encode',
                     ),
+                    maxLines: null,
                   ),
                 ),
               ),

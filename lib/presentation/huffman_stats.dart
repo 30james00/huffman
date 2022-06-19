@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huffman/presentation/huffman_table.dart';
 
 import '../application/huffman.dart';
 
@@ -13,6 +14,7 @@ class HuffmanStats extends StatelessWidget {
         Text(huffman.encoded),
         Text('${huffman.entropy}'),
         Text('${huffman.avgLength}'),
+        HuffmanTable(dict: huffman.code)
       ],
     );
   }
