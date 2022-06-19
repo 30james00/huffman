@@ -1,17 +1,20 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 
 class Huffman {
   HuffmanNode? _root;
-  Map<String, String> _code = <String, String>{};
+  final Map<String, String> _dict = <String, String>{};
   String _encoded = '';
+  double _entropy = 0.0;
+  double _avgLength = 0.0;
 
-  HuffmanNode? get root {
-    return _root;
-  }
-
-  Map<String, String> get code => _code;
-
+  //getters
+  HuffmanNode get root => _root ?? HuffmanNode('-', 0, null, null);
+  Map<String, String> get code => _dict;
   String get encoded => _encoded;
+  double get entropy => _entropy;
+  double get avgLength => _avgLength;
 
   Huffman(String phrase) {
     Map<String, int> freq = _count(phrase);
@@ -22,19 +25,34 @@ class Huffman {
       queue.add(HuffmanNode(key, value, null, null));
     });
 
-    while (queue.length > 1) {
-      HuffmanNode x = queue.removeFirst();
-      HuffmanNode y = queue.removeFirst();
+    if (queue.length == 1) {
+      _root = queue.removeFirst();
+      var c = {_root!.character: '1'};
+      _dict.addAll(c);
+    } else {
+      while (queue.length > 1) {
+        HuffmanNode x = queue.removeFirst();
+        HuffmanNode y = queue.removeFirst();
 
-      HuffmanNode f = HuffmanNode('-', x.frequency + y.frequency, x, y);
+        HuffmanNode f = HuffmanNode('-', x.frequency + y.frequency, x, y);
 
-      _root = f;
+        _root = f;
 
-      queue.add(f);
+        queue.add(f);
+      }
+      _makeDict(_root!, "");
     }
-    if (_root != null) _printCode(_root!, "");
+
     phrase.split('').forEach((c) {
-      _encoded += _code[c] ?? '';
+      _encoded += _dict[c] ?? '';
+    });
+
+    int freqSum = _root!.frequency;
+    freq.forEach((key, value) {
+      double p = value / freqSum;
+      int dictLength = _dict[key]?.length ?? 0;
+      _entropy += p * log(1.0 / p) / ln2;
+      _avgLength += p * dictLength;
     });
   }
 
@@ -46,13 +64,13 @@ class Huffman {
     return result;
   }
 
-  void _printCode(HuffmanNode node, String s) {
+  void _makeDict(HuffmanNode node, String s) {
     if (node.left == null && node.right == null) {
       var c = {node.character: s};
-      _code.addAll(c);
+      _dict.addAll(c);
     } else {
-      _printCode(node.left!, '${s}0');
-      _printCode(node.right!, '${s}1');
+      _makeDict(node.left!, '${s}0');
+      _makeDict(node.right!, '${s}1');
     }
   }
 }
