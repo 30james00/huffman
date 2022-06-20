@@ -8,6 +8,7 @@ class Huffman {
   String _encoded = '';
   double _entropy = 0.0;
   double _avgLength = 0.0;
+  int height = 1;
 
   //getters
   HuffmanNode get root => _root ?? HuffmanNode('-', 0, null, null);
@@ -29,6 +30,7 @@ class Huffman {
       _root = queue.removeFirst();
       var c = {_root!.character: '1'};
       _dict.addAll(c);
+      height = 1;
     } else {
       while (queue.length > 1) {
         HuffmanNode x = queue.removeFirst();
@@ -40,7 +42,7 @@ class Huffman {
 
         queue.add(f);
       }
-      _makeDict(_root!, "");
+      height = _makeDict(_root!, "", 1);
     }
 
     phrase.split('').forEach((c) {
@@ -64,13 +66,15 @@ class Huffman {
     return result;
   }
 
-  void _makeDict(HuffmanNode node, String s) {
+  int _makeDict(HuffmanNode node, String s, int height) {
     if (node.left == null && node.right == null) {
       var c = {node.character: s};
       _dict.addAll(c);
+      return height;
     } else {
-      _makeDict(node.left!, '${s}0');
-      _makeDict(node.right!, '${s}1');
+      int leftHeight = _makeDict(node.left!, '${s}0', height);
+      int rightHeight = _makeDict(node.right!, '${s}1', height);
+      return max(leftHeight, rightHeight) + 1;
     }
   }
 }
