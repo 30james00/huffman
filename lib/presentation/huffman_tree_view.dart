@@ -56,16 +56,16 @@ class HuffmanTreePainter extends CustomPainter {
     if (node.left != null) {
       double newWidth = width - offsetH;
       double newHeigth = heigth + offsetV;
-      canvas.drawLine(Offset(width - radius, heigth + radius),
-          Offset(newWidth + radius, newHeigth - radius), paintP);
+      canvas.drawLine(Offset(width, heigth + radius),
+          Offset(newWidth, newHeigth - radius), paintP);
       _paintNode(
           node.left!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
     }
     if (node.right != null) {
       double newWidth = width + offsetH;
       double newHeigth = heigth + offsetV;
-      canvas.drawLine(Offset(width + radius, heigth + radius),
-          Offset(newWidth - radius, newHeigth - radius), paintP);
+      canvas.drawLine(Offset(width, heigth + radius),
+          Offset(newWidth, newHeigth - radius), paintP);
       _paintNode(
           node.right!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
     }
