@@ -12,11 +12,11 @@ class HuffmanTreeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      child: SizedBox(
-        width: 500,
-        height: 400,
-      ),
       painter: HuffmanTreePainter(huffmanHeight, root),
+      child: const SizedBox(
+        width: 500,
+        height: 500,
+      ),
     );
   }
 }
@@ -24,13 +24,17 @@ class HuffmanTreeView extends StatelessWidget {
 class HuffmanTreePainter extends CustomPainter {
   final HuffmanNode root;
   final int huffmanHeight;
-
-  HuffmanTreePainter(this.huffmanHeight, this.root);
   final Paint paintP = Paint()
     ..color = Colors.black
     ..strokeWidth = 1
     ..style = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round;
+  final TextStyle style = const TextStyle(
+    color: Colors.black,
+    fontSize: 12,
+  );
+
+  HuffmanTreePainter(this.huffmanHeight, this.root);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -52,22 +56,52 @@ class HuffmanTreePainter extends CustomPainter {
     Canvas canvas,
   ) {
     double radius = 15;
-    canvas.drawCircle(Offset(width, heigth), radius, paintP);
-    if (node.left != null) {
-      double newWidth = width - offsetH;
-      double newHeigth = heigth + offsetV;
-      canvas.drawLine(Offset(width, heigth + radius),
-          Offset(newWidth, newHeigth - radius), paintP);
-      _paintNode(
-          node.left!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
+
+    if (node.character == '-') {
+      canvas.drawCircle(Offset(width, heigth), radius, paintP);
+      _paintText(canvas, node.frequency.toString(), width, heigth);
+
+      if (node.left != null) {
+        double newWidth = width - offsetH;
+        double newHeigth = heigth + offsetV;
+
+        canvas.drawLine(Offset(width, heigth + radius),
+            Offset(newWidth, newHeigth - radius), paintP);
+        _paintText(canvas, '0', width - radius, heigth + radius);
+        _paintNode(
+            node.left!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
+      }
+      if (node.right != null) {
+        double newWidth = width + offsetH;
+        double newHeigth = heigth + offsetV;
+
+        canvas.drawLine(Offset(width, heigth + radius),
+            Offset(newWidth, newHeigth - radius), paintP);
+        _paintText(canvas, '1', width + radius, heigth + radius);
+        _paintNode(
+            node.right!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
+      }
+    } else {
+      canvas.drawRect(
+          Rect.fromCenter(
+              center: Offset(width, heigth),
+              width: 2.5 * radius,
+              height: 2 * radius),
+          paintP);
+      _paintText(canvas, '\'${node.character}\': ${node.frequency.toString()}',
+          width, heigth);
     }
-    if (node.right != null) {
-      double newWidth = width + offsetH;
-      double newHeigth = heigth + offsetV;
-      canvas.drawLine(Offset(width, heigth + radius),
-          Offset(newWidth, newHeigth - radius), paintP);
-      _paintNode(
-          node.right!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
-    }
+  }
+
+  void _paintText(Canvas canvas, String text, double width, double heigth) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textAlign: TextAlign.center,
+        textDirection: TextDirection.ltr)
+      ..layout();
+    textPainter.paint(
+        canvas,
+        Offset(width - textPainter.width / 2.0,
+            heigth - textPainter.height / 2.0));
   }
 }
