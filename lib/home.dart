@@ -70,11 +70,6 @@ class _HomePageState extends State<HomePage> {
                         splashRadius: 20,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Processing Data'),
-                              ),
-                            );
                             setState(() {
                               huffman = Huffman(formController.text);
                             });
