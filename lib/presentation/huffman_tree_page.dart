@@ -3,18 +3,31 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:huffman/application/huffman.dart';
 
-class HuffmanTreePage extends StatelessWidget {
-  HuffmanTreePage({Key? key, required this.root, required this.huffmanHeight})
+class HuffmanTreePage extends StatefulWidget {
+  const HuffmanTreePage(
+      {Key? key, required this.root, required this.huffmanHeight})
       : super(key: key);
 
   final HuffmanNode root;
   final int huffmanHeight;
+
+  @override
+  State<HuffmanTreePage> createState() => _HuffmanTreePageState();
+}
+
+class _HuffmanTreePageState extends State<HuffmanTreePage> {
   final ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final double huffmanWidth = pow(2, huffmanHeight - 1) - 1;
+    final double huffmanWidth = pow(2, widget.huffmanHeight - 1) - 1;
     final double offsetW = size.width / huffmanWidth;
 
     return Scaffold(
@@ -30,7 +43,7 @@ class HuffmanTreePage extends StatelessWidget {
             controller: scrollController,
             scrollDirection: Axis.horizontal,
             child: CustomPaint(
-              painter: HuffmanTreePainter(huffmanHeight, root),
+              painter: HuffmanTreePainter(widget.huffmanHeight, widget.root),
               size: offsetW > 45
                   ? Size(size.width * 0.9, size.height * 0.9)
                   : Size(45 * huffmanWidth, size.height * 0.9),
