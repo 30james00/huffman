@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:huffman/application/huffman.dart';
 
-class HuffmanTreeView extends StatelessWidget {
-  const HuffmanTreeView(
+class HuffmanTreePage extends StatelessWidget {
+  const HuffmanTreePage(
       {Key? key, required this.root, required this.huffmanHeight})
       : super(key: key);
 
@@ -11,11 +11,20 @@ class HuffmanTreeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: HuffmanTreePainter(huffmanHeight, root),
-      child: const SizedBox(
-        width: 500,
-        height: 500,
+    final Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: CustomPaint(
+            painter: HuffmanTreePainter(huffmanHeight, root),
+            size: Size(size.width * 0.9, size.height * 0.9),
+          ),
+        ),
       ),
     );
   }
@@ -39,7 +48,7 @@ class HuffmanTreePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double offsetVert = size.height / huffmanHeight;
-    _paintNode(root, size.width / 2.0, 0, size.width / 2.0, offsetVert, canvas);
+    _paintNode(root, size.width / 2.0, 0, size.width / 4.0, offsetVert, canvas);
   }
 
   @override

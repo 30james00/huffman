@@ -8,6 +8,7 @@ class HuffmanTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataTable(
+      sortColumnIndex: 1,
       columns: const [
         DataColumn(label: Text('Character')),
         DataColumn(label: Text('Code')),
