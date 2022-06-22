@@ -20,18 +20,21 @@ class Huffman {
   Huffman(String phrase) {
     Map<String, int> freq = _count(phrase);
 
+    //create queue that sorts characters ascending by their frequencies
     PriorityQueue<HuffmanNode> queue =
         PriorityQueue((a, b) => a.frequency.compareTo(b.frequency));
     freq.forEach((key, value) {
       queue.add(HuffmanNode(key, value, null, null));
     });
 
+    //edge case for one character
     if (queue.length == 1) {
       _root = queue.removeFirst();
       var c = {_root!.character: '1'};
       _dict.addAll(c);
       height = 1;
     } else {
+      //build the tree
       while (queue.length > 1) {
         HuffmanNode x = queue.removeFirst();
         HuffmanNode y = queue.removeFirst();
@@ -45,10 +48,12 @@ class Huffman {
       height = _makeDict(_root!, "", 1);
     }
 
+    //encode original phrase using codes from dictionary
     phrase.split('').forEach((c) {
       _encoded += _dict[c] ?? '';
     });
 
+    //calculate statistics
     int freqSum = _root!.frequency;
     freq.forEach((key, value) {
       double p = value / freqSum;
@@ -58,6 +63,7 @@ class Huffman {
     });
   }
 
+  ///helper function for counting character frequencies in phrase
   Map<String, int> _count(String phrase) {
     Map<String, int> result = <String, int>{};
     phrase.split('').forEach((c) {
@@ -66,6 +72,7 @@ class Huffman {
     return result;
   }
 
+  ///helper function for creating code dictionary for each character
   int _makeDict(HuffmanNode node, String s, int height) {
     if (node.left == null && node.right == null) {
       var c = {node.character: s};

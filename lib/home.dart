@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            constraints: BoxConstraints(maxWidth: 1000),
+            constraints: const BoxConstraints(maxWidth: 1000),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

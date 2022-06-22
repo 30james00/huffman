@@ -80,31 +80,38 @@ class HuffmanTreePainter extends CustomPainter {
   ) {
     double radius = 15;
 
+    //paint node with children
     if (node.character == '-') {
       canvas.drawCircle(Offset(width, heigth), radius, paintP);
       _paintText(canvas, node.frequency.toString(), width, heigth);
 
+      //paint left child
       if (node.left != null) {
         double newWidth = width - offsetH;
         double newHeigth = heigth + offsetV;
 
         canvas.drawLine(Offset(width, heigth + radius),
             Offset(newWidth, newHeigth - radius), paintP);
+        //paint edge label
         _paintText(canvas, '0', width - radius, heigth + radius);
         _paintNode(
             node.left!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
       }
+      //paint right child
       if (node.right != null) {
         double newWidth = width + offsetH;
         double newHeigth = heigth + offsetV;
 
         canvas.drawLine(Offset(width, heigth + radius),
             Offset(newWidth, newHeigth - radius), paintP);
+        //paint edge label
         _paintText(canvas, '1', width + radius, heigth + radius);
         _paintNode(
             node.right!, newWidth, newHeigth, offsetH / 2.0, offsetV, canvas);
       }
-    } else {
+    }
+    //paint leaf
+    else {
       canvas.drawRect(
           Rect.fromCenter(
               center: Offset(width, heigth),
