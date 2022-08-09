@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:huffman/application/huffman.dart';
 
-class HuffmanTreePage extends StatefulWidget {
-  const HuffmanTreePage(
+class HuffmanTreeScreen extends StatefulWidget {
+  const HuffmanTreeScreen(
       {Key? key, required this.root, required this.huffmanHeight})
       : super(key: key);
 
@@ -12,10 +12,10 @@ class HuffmanTreePage extends StatefulWidget {
   final int huffmanHeight;
 
   @override
-  State<HuffmanTreePage> createState() => _HuffmanTreePageState();
+  State<HuffmanTreeScreen> createState() => _HuffmanTreeScreenState();
 }
 
-class _HuffmanTreePageState extends State<HuffmanTreePage> {
+class _HuffmanTreeScreenState extends State<HuffmanTreeScreen> {
   final ScrollController scrollController = ScrollController();
 
   @override

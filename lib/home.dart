@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huffman/application/huffman.dart';
 import 'package:huffman/presentation/huffman_stats.dart';
-import 'package:huffman/presentation/huffman_tree_page.dart';
+import 'package:huffman/presentation/huffman_tree_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HuffmanTreePage(
+                          builder: (context) => HuffmanTreeScreen(
                             huffmanHeight: huffman!.height,
                             root: huffman!.root,
                           ),
